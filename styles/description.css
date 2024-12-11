@@ -1,0 +1,53 @@
+.slider {
+    position: relative;
+    max-width: 600px; /* スライダーの最大幅 */
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .slides img {
+    width: 100%;
+    display: block;
+  }
+  
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .prev {
+    left: 10px;
+  }
+  
+  .next {
+    right: 10px;
+  }
+
+  /* 次へボタン */
+  #next-button {
+    background-color: #f0f0f0;
+    color: black;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }

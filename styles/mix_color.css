@@ -1,0 +1,68 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+}
+
+.mix-color-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: black;
+}
+  
+  .MixColor-header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .loading-text {
+    font-size: 100px;
+    margin-top: 180px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    color: transparent;
+    background: linear-gradient(
+      to top,
+      var(--blended-color) var(--progress),
+      transparent var(--progress)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-shadow: 0px 4px 6px rgba(255, 255, 255, 0.5);
+    transition: background-size 0.3s ease;
+  }
+  
+  .start-button {
+    margin-top: 150px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 30px;
+    color: black;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .start-button.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+  
+  .start-button:hover {
+    background-color: #d9d9d9;
+  }
+  

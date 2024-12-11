@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mix Color</title>
+  <link rel="stylesheet" href="styles/mix_color.css">
+</head>
+<body>
+  <div class="mix-color-screen">
+    <div class="MixColor-header">
+      <h4>スマホを上下に振って色を完成させましょう</h4>
+      <p>色で満たされたら完成です</p>
+    </div>
+    <div
+      class="loading-text"
+      id="loading-text"
+      style="--progress: 0%; --blended-color: #000000;"
+    >
+      START
+    </div>
+    <button id="start-button" class="start-button">START</button>
+  </div>
+  <script src="mix_color.js"></script>
+</body>
+</html>
+
