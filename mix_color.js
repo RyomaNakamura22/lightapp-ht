@@ -57,21 +57,27 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("加速度センサーの使用が許可されませんでした。");
           }
         } catch (error) {
-          console.error("加速度センサー許可中エラー:", error);
+          console.error("加速度センサーの使用許可リクエスト中にエラー:", error);
         }
-      } else {
-        alert("加速度センサーの使用が許可されませんでした。");
       }
     };
   
-    const addPermissionListener = () => {
-      window.addEventListener("click", async () => {
-        await requestPermission();
-        window.removeEventListener("click", addPermissionListener);
-      });
+    const addSafariPermissionListener = () => {
+      const handleClick = () => {
+        requestPermission();
+        window.removeEventListener("click", handleClick);
+      };
+      window.addEventListener("click", handleClick);
     };
   
-    addPermissionListener();
+    if (
+      navigator.userAgent.includes("Safari") &&
+      !navigator.userAgent.includes("Chrome")
+    ) {
+      addSafariPermissionListener(); // Safari用許可
+    } else {
+      requestPermission(); // Chrome用
+    }
   
     window.addEventListener("devicemotion", handleShake);
   
