@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
           console.error("加速度センサー許可中エラー:", error);
         }
+      } else {
+        alert("加速度センサーの使用が許可されませんでした。");
       }
     };
   
@@ -69,15 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     };
   
-    if (
-      /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) &&
-      typeof DeviceMotionEvent !== "undefined" &&
-      typeof DeviceMotionEvent.requestPermission === "function"
-    ) {
-      addPermissionListener();
-    } else {
-      requestPermission();
-    }
+    addPermissionListener();
   
     window.addEventListener("devicemotion", handleShake);
   
@@ -86,9 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`完成した色: ${blendColors(colors[0], colors[1], 100)}`);
       }
     });
-  });
+});
   
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const nextButton = document.getElementById("start-button");
 
     nextButton.addEventListener("click", () => {
