@@ -96,3 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("devicemotion", handleThrow);
   });
   
+  document.addEventListener("DOMContentLoaded", () => {
+    const nextButton = document.getElementById("next-button");
+
+    nextButton.addEventListener("click", () => {
+        window.location.href = "complete.html"; // 遷移先のHTMLファイル名を指定
+    });
+});

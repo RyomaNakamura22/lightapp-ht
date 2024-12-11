@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
   document.addEventListener("DOMContentLoaded", () => {
-    const nextButton = document.getElementById("next-button");
+    const nextButton = document.getElementById("start-button");
 
     nextButton.addEventListener("click", () => {
         window.location.href = "throw_color.html"; // 遷移先のHTMLファイル名を指定
