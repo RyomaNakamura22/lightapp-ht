@@ -68,6 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextButton = document.getElementById("next-button");
 
     nextButton.addEventListener("click", () => {
-        window.location.href = "description.html"; // 遷移先のHTMLファイル名を指定
+        window.location.href = "mix_color.html"; // 遷移先のHTMLファイル名を指定
     });
 });
