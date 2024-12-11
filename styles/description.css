@@ -1,4 +1,12 @@
-.slider {
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+  }
+
+  .slider {
     position: relative;
     max-width: 600px; /* スライダーの最大幅 */
     margin: auto;
@@ -36,7 +44,8 @@
   }
 
   /* 次へボタン */
-  #ok-button {
+  #okButton {
+    margin-top: 40px;
     background-color: #f0f0f0;
     color: black;
     border: none;
