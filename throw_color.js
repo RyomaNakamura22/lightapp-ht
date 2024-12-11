@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   
-    const mixedColor = "#FF5733"; // デフォルトの完成した色
+    // mixcolorから渡された色を取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const mixedColor = urlParams.get('mixedColor') || "#FF5733"; // デフォルトの完成した色
+  
     let ball = { x: canvas.width / 2, y: canvas.height / 2, radius: 20 };
     let trail = [];
     const trailLength = 15;
@@ -94,12 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     window.addEventListener("devicemotion", handleThrow);
-  });
   
-  document.addEventListener("DOMContentLoaded", () => {
     const nextButton = document.getElementById("next-button");
-
-    nextButton.addEventListener("click", () => {
+    if (nextButton) {
+      nextButton.addEventListener("click", () => {
         window.location.href = "complete.html"; // 遷移先のHTMLファイル名を指定
-    });
-});
+      });
+    }
+  });
