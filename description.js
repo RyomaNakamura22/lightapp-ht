@@ -13,3 +13,11 @@ function moveSlide(step) {
 
 // 初期表示
 showSlide(currentSlide);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const nextButton = document.getElementById("okbutton");
+
+    nextButton.addEventListener("click", () => {
+        window.location.href = "throw_color.html"; // 遷移先のHTMLファイル名を指定
+    });
+});
