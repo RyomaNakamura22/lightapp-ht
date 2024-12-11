@@ -15,7 +15,7 @@ function moveSlide(step) {
 showSlide(currentSlide);
 
 document.addEventListener("DOMContentLoaded", () => {
-    const nextButton = document.getElementById("okbutton");
+    const nextButton = document.getElementById("okButton");
 
     nextButton.addEventListener("click", () => {
         window.location.href = "throw_color.html"; // 遷移先のHTMLファイル名を指定
