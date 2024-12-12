@@ -7,14 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = window.innerHeight;
     
     const mixedColor = localStorage.getItem('mixedColor') || "#FF5733";
-    const shakeThreshold = 40; // 閾値を40に変更
+    const shakeThresholdLow = 20;  // 低い閾値
+    const shakeThresholdHigh = 40; // 高い閾値
     
     let throwCount = 0;
     const maxThrows = 3;
     let ball = { 
-        x: canvas.width / 2,  // 画面中央のX座標
-        y: canvas.height / 2, // 画面中央のY座標
-        radius: 35,          // ボールのサイズを大きく
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        radius: 35,
         speedX: 0,
         speedY: 0
     };
@@ -24,14 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
     finishButton.style.display = 'none';
     
     const drawBall = () => {
-        // 軌跡の透明度を調整
         ctx.fillStyle = "rgba(0,0,0,0.2)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        // ボールを描画
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fillStyle = mixedColor;  // mix_colorでブレンドされた色を使用
+        ctx.fillStyle = mixedColor;
         ctx.fill();
     };
     
@@ -42,32 +41,26 @@ document.addEventListener("DOMContentLoaded", () => {
             
             drawBall();
             
-            // ボールが完全に画面外に出てから少し待ってリセット
-            if (ball.y + ball.radius < -100) {  // 余裕を持って画面外まで
-                setTimeout(() => {
-                    isAnimating = false;
-                    throwCount++;
-                    
-                    // リセット
-                    ball = { 
-                        x: canvas.width / 2,
-                        y: canvas.height / 2,
-                        radius: 35,
-                        speedX: 0,
-                        speedY: 0
-                    };
-                    isThrown = false;
-                    
-                    // キャンバスをクリア
-                    ctx.fillStyle = "rgba(0,0,0,1)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    if (throwCount >= 1) {
-                        finishButton.style.display = 'block';
-                    }
-                }, 500);  // 0.5秒待ってからリセット
+            if (ball.y + ball.radius < -100) {
+                isAnimating = false;
+                throwCount++;
+                
+                // リセット処理をすぐに行う
+                ball = { 
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    radius: 35,
+                    speedX: 0,
+                    speedY: 0
+                };
+                isThrown = false;
+                
+                if (throwCount >= maxThrows) {
+                    finishButton.style.display = 'block';
+                }
+            } else {
+                requestAnimationFrame(animate);
             }
-            requestAnimationFrame(animate);
         }
     };
     
@@ -76,13 +69,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const { x = 0, y = 0, z = 0 } = acceleration;
         const totalAcceleration = Math.sqrt(x * x + y * y + z * z);
         
-        if (!isThrown && !isAnimating && throwCount < maxThrows && 
-            totalAcceleration > shakeThreshold) {
-            isThrown = true;
-            isAnimating = true;
-            ball.speedY = -20; // 上向きの速度を大きく
-            ball.speedX = x * 0.3; // 横方向の動きも少し大きく
-            animate();
+        if (!isThrown && !isAnimating && throwCount < maxThrows) {
+            if (totalAcceleration > shakeThresholdHigh) {
+                // 強い振り
+                isThrown = true;
+                isAnimating = true;
+                ball.speedY = -20;  // 通常スピード
+                ball.speedX = x * 0.3;
+                animate();
+            } else if (totalAcceleration > shakeThresholdLow) {
+                // 弱い振り
+                isThrown = true;
+                isAnimating = true;
+                ball.speedY = -10;  // ゆっくりスピード
+                ball.speedX = x * 0.15;
+                animate();
+            }
         }
     };
     
