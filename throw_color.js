@@ -7,53 +7,53 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = window.innerHeight;
     
     const mixedColor = localStorage.getItem('mixedColor') || "#FF5733";
+    const shakeThreshold = 40; // 閾値を40に変更
     
     let throwCount = 0;
     const maxThrows = 3;
     let ball = { 
-        x: canvas.width / 2, 
-        y: canvas.height / 2, 
-        radius: 20,
+        x: canvas.width / 2,  // 画面中央のX座標
+        y: canvas.height / 2, // 画面中央のY座標
+        radius: 35,          // ボールのサイズを大きく
         speedX: 0,
-        speedY: -15  // 上向きの初速
+        speedY: 0
     };
-    const gravity = 0.5;  // 重力加速度
     let isThrown = false;
     let isAnimating = false;
 
     finishButton.style.display = 'none';
     
     const drawBall = () => {
-        ctx.fillStyle = "rgba(0,0,0,0.1)";  // 軌跡効果
+        // 軌跡の透明度を調整
+        ctx.fillStyle = "rgba(0,0,0,0.2)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
+        // ボールを描画
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-        ctx.fillStyle = mixedColor;
+        ctx.fillStyle = mixedColor;  // mix_colorでブレンドされた色を使用
         ctx.fill();
     };
     
     const animate = () => {
         if (isThrown && isAnimating) {
-            // 物理演算
-            ball.speedY += gravity;  // 重力の影響
-            ball.x += ball.speedX;
             ball.y += ball.speedY;
+            ball.x += ball.speedX;
             
             drawBall();
             
-            // ボールが画面外に出たら
-            if (ball.y + ball.radius < 0 || ball.y - ball.radius > canvas.height) {
+            // ボールが画面上部から出たら
+            if (ball.y + ball.radius < 0) {
                 isAnimating = false;
                 throwCount++;
                 
                 // リセット
                 ball = { 
-                    x: canvas.width / 2, 
-                    y: canvas.height / 2, 
-                    radius: 20,
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    radius: 35,
                     speedX: 0,
-                    speedY: -15
+                    speedY: 0
                 };
                 isThrown = false;
                 
@@ -68,48 +68,18 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const handleThrow = (event) => {
         const acceleration = event.acceleration || {};
-        const { x = 0, y = 0 } = acceleration;
+        const { x = 0, y = 0, z = 0 } = acceleration;
+        const totalAcceleration = Math.sqrt(x * x + y * y + z * z);
         
         if (!isThrown && !isAnimating && throwCount < maxThrows && 
-            (Math.abs(x) > shakeThreshold || Math.abs(y) > shakeThreshold)) {
+            totalAcceleration > shakeThreshold) {
             isThrown = true;
             isAnimating = true;
-            ball.speedX = x * 0.2;  // 加速度センサーの値を速度に変換
+            ball.speedY = -20; // 上向きの速度を大きく
+            ball.speedX = x * 0.3; // 横方向の動きも少し大きく
             animate();
         }
     };
-    
-    const requestPermission = async () => {
-        if (
-            typeof DeviceMotionEvent !== "undefined" &&
-            typeof DeviceMotionEvent.requestPermission === "function"
-        ) {
-            try {
-                const permission = await DeviceMotionEvent.requestPermission();
-                if (permission !== "granted") {
-                    alert("加速度センサーの使用が許可されませんでした。");
-                }
-            } catch (error) {
-                console.error("加速度センサーの許可エラー:", error);
-            }
-        }
-    };
-    
-    const addPermissionListener = () => {
-        window.addEventListener("click", () => {
-            requestPermission();
-            window.removeEventListener("click", addPermissionListener);
-        });
-    };
-    
-    if (
-        navigator.userAgent.includes("Safari") &&
-        !navigator.userAgent.includes("Chrome")
-    ) {
-        addPermissionListener();
-    } else {
-        requestPermission();
-    }
     
     window.addEventListener("devicemotion", handleThrow);
     
