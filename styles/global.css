@@ -39,7 +39,7 @@ body {
     font-weight: bold;
     border-radius: 5px; 
     cursor: pointer;
-    margin-bottom: 150px;
+    margin-bottom: 200px;
   }
   
   .ok-button:hover, .next-button:hover {

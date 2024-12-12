@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 isAnimating = false;
                 throwCount++;
                 
-                // リセット処理をすぐに行う
+                // リセット処理
                 ball = { 
                     x: canvas.width / 2,
                     y: canvas.height / 2,
@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 isThrown = false;
                 
-                if (throwCount >= maxThrows) {
+                // 1回目の投げ終わりで終了ボタンを表示
+                if (throwCount >= 1) {
                     finishButton.style.display = 'block';
                 }
             } else {
@@ -73,17 +74,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (totalAcceleration > shakeThresholdHigh) {
                 // 強い振り
                 isThrown = true;
-                isAnimating = true;
-                ball.speedY = -20;  // 通常スピード
-                ball.speedX = x * 0.3;
-                animate();
+                // 1秒のディレイを追加
+                setTimeout(() => {
+                    isAnimating = true;
+                    ball.speedY = -20;
+                    ball.speedX = x * 0.3;
+                    animate();
+                }, 1000);
             } else if (totalAcceleration > shakeThresholdLow) {
                 // 弱い振り
                 isThrown = true;
-                isAnimating = true;
-                ball.speedY = -10;  // ゆっくりスピード
-                ball.speedX = x * 0.15;
-                animate();
+                // 1秒のディレイを追加
+                setTimeout(() => {
+                    isAnimating = true;
+                    ball.speedY = -10;
+                    ball.speedX = x * 0.15;
+                    animate();
+                }, 1000);
             }
         }
     };
