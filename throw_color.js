@@ -42,27 +42,32 @@ document.addEventListener("DOMContentLoaded", () => {
             
             drawBall();
             
-            // ボールが画面上部から出たら
-            if (ball.y + ball.radius < 0) {
-                isAnimating = false;
-                throwCount++;
-                
-                // リセット
-                ball = { 
-                    x: canvas.width / 2,
-                    y: canvas.height / 2,
-                    radius: 35,
-                    speedX: 0,
-                    speedY: 0
-                };
-                isThrown = false;
-                
-                if (throwCount >= 1) {
-                    finishButton.style.display = 'block';
-                }
-            } else {
-                requestAnimationFrame(animate);
+            // ボールが完全に画面外に出てから少し待ってリセット
+            if (ball.y + ball.radius < -100) {  // 余裕を持って画面外まで
+                setTimeout(() => {
+                    isAnimating = false;
+                    throwCount++;
+                    
+                    // リセット
+                    ball = { 
+                        x: canvas.width / 2,
+                        y: canvas.height / 2,
+                        radius: 35,
+                        speedX: 0,
+                        speedY: 0
+                    };
+                    isThrown = false;
+                    
+                    // キャンバスをクリア
+                    ctx.fillStyle = "rgba(0,0,0,1)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    if (throwCount >= 1) {
+                        finishButton.style.display = 'block';
+                    }
+                }, 500);  // 0.5秒待ってからリセット
             }
+            requestAnimationFrame(animate);
         }
     };
     
