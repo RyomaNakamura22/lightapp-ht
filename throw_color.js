@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ball.speedY = -20;
                     ball.speedX = x * 0.3;
                     animate();
-                }, 1000);
+                }, 500);
             } else if (totalAcceleration > shakeThresholdLow) {
                 // 弱い振り
                 isThrown = true;
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ball.speedY = -10;
                     ball.speedX = x * 0.15;
                     animate();
-                }, 1000);
+                }, 500);
             }
         }
     };
