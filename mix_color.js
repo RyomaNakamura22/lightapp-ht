@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     const loadingText = document.getElementById("loading-text");
     const startButton = document.getElementById("start-button");
-    const colors = ["#FF0000", "#0000FF"]; // デフォルトの色
+    const colors = [
+        localStorage.getItem('color1') || "#FF0000",
+        localStorage.getItem('color2') || "#0000FF"
+    ];
     let mixProgress = 0;
     let cooldown = false;
     const shakeThreshold = 40; // 加速度センサーの閾値
@@ -30,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loadingText.style.setProperty("--blended-color", blendedColor);
       if (mixProgress >= 100) {
         startButton.classList.add("visible");
+        localStorage.setItem('mixedColor', blendedColor);
       }
     };
   
@@ -80,18 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     window.addEventListener("devicemotion", handleShake);
-  
-    startButton.addEventListener("click", () => {
-      if (mixProgress >= 100) {
-        alert(`完成した色: ${blendColors(colors[0], colors[1], 100)}`);
-      }
-    });
 });
   
 document.addEventListener("DOMContentLoaded", () => {
     const nextButton = document.getElementById("start-button");
 
     nextButton.addEventListener("click", () => {
-        window.location.href = "throw_color.html"; // 遷移先のHTMLファイル名を指定
+        window.location.href = "description.html"; // 遷移先のHTMLファイル名を指定
     });
 });

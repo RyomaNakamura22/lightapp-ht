@@ -22,12 +22,12 @@ body {
   .header h1 {
     font-size: 2.5em;
     font-weight: bold;
-    margin: 0;
+    margin-top: 30px;
   }
   
   .header p {
     font-size: 1.2em;
-    margin: 10px 0;
+    margin: 5px 0;
   }
   
   /* カラーボールの円 */
@@ -66,22 +66,39 @@ body {
   /* カラーボール */
   .rotating-ball {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 
+      inset -4px -4px 8px rgba(0, 0, 0, 0.5),  /* 内側の影 */
+      inset 4px 4px 8px rgba(255, 255, 255, 0.5),  /* 内側の影 */
+      5px 5px 10px rgba(0, 0, 0, 0.3);  /* 外側の影 */
   }
   
   .rotating-ball.selected {
     border: 3px solid white;
   }
   
+  .rotating-ball::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+  }
+  
   /* 次へボタン */
   #next-button {
     background-color: #f0f0f0;
     color: black;
+    font-weight: bold;
     border: none;
-    padding: 15px 30px;
+    padding: 15px 50px;
+    margin-bottom: 50px;
     font-size: 1.2em;
     border-radius: 5px;
     cursor: pointer;

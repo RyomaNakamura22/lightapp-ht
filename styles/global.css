@@ -23,10 +23,11 @@ body {
   
   .text-container {
     text-align: Light; 
-    margin-top: 200px; 
-    font-size: 20px;
+    margin-top: 150px; 
+    font-size: 12px;
     font-weight: bold;
     letter-spacing: 5px;
+    line-height: 5;
   }
   
   .ok-button, .next-button {
@@ -38,11 +39,11 @@ body {
     font-weight: bold;
     border-radius: 5px; 
     cursor: pointer;
-    margin-bottom: 50px;
+    margin-bottom: 150px;
   }
   
   .ok-button:hover, .next-button:hover {
-    background-color: #45a049;
+    background-color: #ffffff;
   }
   
   .color-options {
